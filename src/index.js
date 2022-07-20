@@ -1,27 +1,21 @@
-import App from './App';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import { configureStore } from './store';
 import { Provider } from 'react-redux';
-import {createRoot} from 'react-dom/client';
+import { configureStore } from './store';
+import App from './App.js';
 
 const store = configureStore();
 const persistor = persistStore(store);
 
-const loading = <div>Loading...</div>;
-
-function RootComponent() {
-    return (
-        <Provider store={store}>
-            <PersistGate loading={loading} persistor={persistor}>
-                <App />
-            </PersistGate>
-        </Provider>
-    );
-}
-
-// ReactDOM.render(<RootComponent />, document.getElementById('root'));
-
-createRoot(document.getElementById('root'))
-.render(<RootComponent />)
+ReactDOM.render(
+    <Provider store={store}>
+        <PersistGate
+            loading={<div>Loading...</div>}
+            persistor={persistor}>
+            <App />
+        </PersistGate>
+    </Provider>,
+    document.getElementById('root'),
+);
